@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.spring_movie01.dao.AdminDao">
+
+	<select id="selectAdminMovieList" resultType="com.spring_movie01.dto.MovieDto">
+		SELECT MVCODE, MVNAME, MVPD, MVACTOR, MVGENRE, MVAGE, MVTIME, TO_CHAR(MVOPEN,'YYYY-MM-DD') AS MVOPEN, MVPOSTER, MVSTATE 
+		FROM MOVIES 
+		ORDER BY MVCODE
+	</select>
+	
+	<update id="updateMvState">
+		UPDATE MOVIES
+		SET MVSTATE = #{mvstate}
+		WHERE MVCODE = #{mvcode}
+	</update>
+
+	<select id="selectMvInfo" resultType="com.spring_movie01.dto.MovieDto">
+		SELECT MVCODE, MVNAME, MVPD, MVACTOR, MVGENRE, MVAGE, MVTIME, TO_CHAR(MVOPEN,'YYYY-MM-DD') AS MVOPEN, MVPOSTER, MVSTATE 
+		FROM MOVIES 
+		WHERE MVCODE = #{mvcode}
+	</select>
+
+	<select id="selectAdminTheaterList" resultType="com.spring_movie01.dto.TheatersDto">
+		SELECT THCODE, THNAME, THADDR, THTEL, THSTATE
+		FROM THEATERS
+		ORDER BY THCODE
+	</select>
+
+	<update id="updateThState">
+		UPDATE THEATERS
+		SET THSTATE = #{thstate}
+		WHERE THCODE = #{thcode}
+	</update>
+	
+	<select id="selectThInfo" resultType="com.spring_movie01.dto.TheatersDto">
+		SELECT THCODE, THNAME, THADDR, THTEL, THSTATE
+		FROM THEATERS
+		WHERE THCODE = #{thcode}
+	</select>
+
+	<update id="updateThInfo">
+		UPDATE THEATERS
+		SET THNAME = #{thname}, THADDR = #{thaddr}, THTEL = #{thtel}
+		WHERE THCODE = #{thcode}
+	</update>
+
+	<select id="selectadminSchedulesList" resultType="com.spring_movie01.dto.SchedulesDto">
+		SELECT SCROOM, TO_CHAR(SCDATE,'YYYY-MM-DD HH24:MI') AS SCDATE, SCTHCODE, SCMVCODE  
+		FROM SCHEDULES 
+		ORDER BY SCTHCODE
+	</select>
+
+	<delete id="deleteSchedules">
+		DELETE FROM SCHEDULES WHERE SCROOM = #{scroom}
+	</delete>
+
+	<select id="selectReserveMvList" resultType="com.spring_movie01.dto.MovieDto">
+  		SELECT *
+  		FROM MOVIES
+  		WHERE MVCODE IN ( SELECT SCMVCODE FROM SCHEDULES ) 
+  	</select>
+  	
+  	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>
